@@ -17,7 +17,8 @@ function draw() {
 background(100);
 
 //desenhar a nave
-image(imagemNave, 400, 500);
+image(imagemNave, mouseX-imagemNave.width/2, 500);
+//desenhando o alien
 image(imagemAlien, 400, 200);
 
 }

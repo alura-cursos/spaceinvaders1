@@ -6,6 +6,8 @@ let posicaoMissil;
 let posicaoNave;
 let posicaoAlien;
 
+let colidiu;
+
 
 //preparando o ambiente de trabalho
 //carrengado as fantasias do nosso jogo
@@ -34,10 +36,36 @@ function draw() {
     posicaoMissil.y = posicaoMissil.y - 1;
     //centralizando a posição da nave
     posicaoNave.x = mouseX - imagemNave.width / 2;
+
+    colidiu = true;
+    //se o canto direito do míssil estiver para a esquerda do alien
+    if(posicaoMissil.x + imagemMissil.width < posicaoAlien.x){
+        //não estão colidindo
+        console.log("não estão colidindo");
+        colidiu = false;
+    }
+    //se o canto esquerdo do mísil estiver para direita do alien
+    if(posicaoMissil.x > posicaoAlien.x + imagemAlien.width){
+        console.log("não estão colidindo");
+        colidiu = false;
+    }
+    //se o topo do míssil estiver para baixo do alien
+    if(posicaoMissil.y > posicaoAlien.y + imagemAlien.height){
+        console.log("não estão colidindo");
+        colidiu = false;
+    }
+
+    if(posicaoMissil.y + imagemMissil.height < posicaoAlien.y){
+        console.log("não estão colidindo");
+        colidiu = false;
+    }
     //desenhar a nave
     image(imagemNave, posicaoNave.x, posicaoNave.y);
-    //desenhando o alien
-    image(imagemAlien, posicaoAlien.x, posicaoAlien.y);
+    if(colidiu == false){
+        //desenhando o alien
+        image(imagemAlien, posicaoAlien.x, posicaoAlien.y);
+    }
+    
     //desenhando o missil
     image(imagemMissil, posicaoMissil.x, posicaoMissil.y);
 

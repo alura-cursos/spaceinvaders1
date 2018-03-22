@@ -6,7 +6,8 @@ let posicaoMissil;
 let posicaoNave;
 let posicaoAlien;
 
-let alienVivo = false;
+let alienVivo = true;
+let estaTocando;
 
 //preparando o ambiente de trabalho
 //carrengado as fantasias do nosso jogo
@@ -37,6 +38,29 @@ function draw() {
     posicaoNave.x = mouseX - imagemNave.width / 2;
     //desenhar a nave
     image(imagemNave, posicaoNave.x, posicaoNave.y);
+
+    estaTocando = true;
+    //o míssil esta muito para a esquerda
+    if(posicaoMissil.x + imagemMissil.width < posicaoAlien.x){
+        //o missil não está tocando o alien
+        console.log("nao tocou");
+        estaTocando = false;
+    }
+
+    if(posicaoAlien.x + imagemAlien.width < posicaoMissil.x){
+        // //o missil não está tocando o alien
+        console.log("nao tocou");
+        estaTocando = false;
+    }
+
+    if(posicaoMissil.y > posicaoAlien.y + imagemAlien.height){
+        console.log("nao tocou");
+        estaTocando = false;
+    }
+
+    if(estaTocando == true){
+        alienVivo = false;
+    }
 
     //se o alien esta vivo, eu devo desenhar ele
     if(alienVivo == true){

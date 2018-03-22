@@ -9,6 +9,8 @@ let posicaoAlien;
 let alienVivo = true;
 let estaTocando;
 
+let velocidadeAlien = 2;
+
 //preparando o ambiente de trabalho
 //carrengado as fantasias do nosso jogo
 function preload(){
@@ -39,8 +41,9 @@ function draw() {
     //desenhar a nave
     image(imagemNave, posicaoNave.x, posicaoNave.y);
 
-    verificaColisao();   
+    verificaColisao();
     alienEstaVivo();
+    movimentarAlien();
     desenhaAlien();
     //desenhando o missil
     image(imagemMissil, posicaoMissil.x, posicaoMissil.y);
@@ -55,10 +58,11 @@ function mousePressed(){
 function verificaColisao(){
     estaTocando = true;
 
-    //se o missil está muito para esquerda OU muito para direita OU muito para baixo
+    //se o missil está para esquerda OU (||)  para direita OU  para baixo OU para cima
     if(posicaoMissil.x + imagemMissil.width < posicaoAlien.x ||
         posicaoMissil.x  > posicaoAlien.x + imagemAlien.width ||
-        posicaoMissil.y > posicaoAlien.y + imagemAlien.height
+        posicaoMissil.y > posicaoAlien.y + imagemAlien.height ||
+        posicaoMissil.y +  imagemMissil.height < posicaoAlien.y
     ){
         //o missil não está tocando o alien
         estaTocando = false;
@@ -76,5 +80,12 @@ function desenhaAlien(){
 function alienEstaVivo(){
     if(estaTocando == true){
         alienVivo = false;
+    }
+}
+
+function movimentarAlien(){
+    posicaoAlien.x = posicaoAlien.x + velocidadeAlien;
+    if(posicaoAlien.x + imagemAlien.width > 900 || posicaoAlien.x < 0){
+        velocidadeAlien = velocidadeAlien * -1;
     }
 }

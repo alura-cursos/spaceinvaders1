@@ -18,7 +18,7 @@ function preload(){
     imagemMissil = loadImage("imagens/Missil.png");
 }
 
-//"Ao clicar na bandeira verder"
+//Quando meu jogo começa
 function setup() {
     // criando um palco com 900 de largura e 600 de altura
     createCanvas(900, 600);
@@ -39,35 +39,9 @@ function draw() {
     //desenhar a nave
     image(imagemNave, posicaoNave.x, posicaoNave.y);
 
-    estaTocando = true;
-    //o míssil esta muito para a esquerda
-    if(posicaoMissil.x + imagemMissil.width < posicaoAlien.x){
-        //o missil não está tocando o alien
-        console.log("nao tocou");
-        estaTocando = false;
-    }
-
-    if(posicaoAlien.x + imagemAlien.width < posicaoMissil.x){
-        // //o missil não está tocando o alien
-        console.log("nao tocou");
-        estaTocando = false;
-    }
-
-    if(posicaoMissil.y > posicaoAlien.y + imagemAlien.height){
-        console.log("nao tocou");
-        estaTocando = false;
-    }
-
-    if(estaTocando == true){
-        alienVivo = false;
-    }
-
-    //se o alien esta vivo, eu devo desenhar ele
-    if(alienVivo == true){
-        //desenhando o alien
-        image(imagemAlien, posicaoAlien.x, posicaoAlien.y);
-    }
- 
+    verificaColisao();   
+    alienEstaVivo();
+    desenhaAlien();
     //desenhando o missil
     image(imagemMissil, posicaoMissil.x, posicaoMissil.y);
 
@@ -76,4 +50,31 @@ function draw() {
 function mousePressed(){
     posicaoMissil.y = posicaoNave.y;
     posicaoMissil.x = mouseX - imagemMissil.width / 2;
+}
+
+function verificaColisao(){
+    estaTocando = true;
+
+    //se o missil está muito para esquerda OU muito para direita OU muito para baixo
+    if(posicaoMissil.x + imagemMissil.width < posicaoAlien.x ||
+        posicaoMissil.x  > posicaoAlien.x + imagemAlien.width ||
+        posicaoMissil.y > posicaoAlien.y + imagemAlien.height
+    ){
+        //o missil não está tocando o alien
+        estaTocando = false;
+    }
+}
+
+function desenhaAlien(){
+    //se o alien esta vivo, eu devo desenhar ele
+    if(alienVivo == true){
+        //desenhando o alien
+        image(imagemAlien, posicaoAlien.x, posicaoAlien.y);
+    }
+}
+
+function alienEstaVivo(){
+    if(estaTocando == true){
+        alienVivo = false;
+    }
 }

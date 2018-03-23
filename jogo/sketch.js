@@ -26,7 +26,6 @@ function preload(){
 function setup() {
     // criando um palco com 900 de largura e 600 de altura
     createCanvas(900, 600);
-
     posicaoNave = createVector(400 , 500);
     posicaoAlien = createVector(350, 200);
 }
@@ -41,8 +40,8 @@ function draw() {
     //desenhar a nave
     image(imagemNave, posicaoNave.x, posicaoNave.y);
 
-    //verificaColisao();
-    alienEstaVivo();
+    verificaColisao();
+
     movimentarAlien();
     desenhaAlien();
     desenhaMisseis();
@@ -55,16 +54,20 @@ function mousePressed(){
 }
 
 function verificaColisao(){
-    estaTocando = true;
-
-    //se o missil está para esquerda OU (||)  para direita OU  para baixo OU para cima
-    if(posicaoMissil.x + imagemMissil.width < posicaoAlien.x ||
-        posicaoMissil.x  > posicaoAlien.x + imagemAlien.width ||
-        posicaoMissil.y > posicaoAlien.y + imagemAlien.height ||
-        posicaoMissil.y +  imagemMissil.height < posicaoAlien.y
-    ){
-        //o missil não está tocando o alien
-        estaTocando = false;
+    
+    for(let posicao of posicoesMisseis){
+        //se o missil está para esquerda OU (||)  para direita OU  para baixo OU para cima
+        if(posicao.x + imagemMissil.width < posicaoAlien.x ||
+            posicao.x  > posicaoAlien.x + imagemAlien.width ||
+            posicao.y > posicaoAlien.y + imagemAlien.height ||
+            posicao.y +  imagemMissil.height < posicaoAlien.y
+        ){
+         //o missil não está tocando o alien
+          
+        }else{
+            //o alien está morto
+            alienVivo = false
+        }
     }
 }
 
@@ -76,11 +79,6 @@ function desenhaAlien(){
     }
 }
 
-function alienEstaVivo(){
-    if(estaTocando == true){
-        alienVivo = false;
-    }
-}
 
 function movimentarAlien(){
     posicaoAlien.x = posicaoAlien.x + velocidadeAlien;

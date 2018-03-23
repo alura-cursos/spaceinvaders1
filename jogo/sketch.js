@@ -4,6 +4,7 @@ let imagemMissil;
 
 
 let posicoesMisseis = new Array();
+let posicoesAliens = new Array();
 
 let posicaoNave;
 let posicaoAlien;
@@ -28,6 +29,12 @@ function setup() {
     createCanvas(900, 600);
     posicaoNave = createVector(400 , 500);
     posicaoAlien = createVector(350, 200);
+
+    for(let numeroAliens = 0; numeroAliens < 6 ; numeroAliens = numeroAliens+1 ){
+        //faça algo
+        posicoesAliens.push(createVector(numeroAliens * 150,0));
+    }
+  
 }
 
 //desenhando nosso atores - igual ao bloco "sempre" do scracth
@@ -76,6 +83,10 @@ function desenhaAlien(){
     if(alienVivo == true){
         //desenhando o alien
         image(imagemAlien, posicaoAlien.x, posicaoAlien.y);
+    }
+
+    for(let posicao of posicoesAliens){
+        image(imagemAlien, posicao.x, posicao.y);
     }
 }
 

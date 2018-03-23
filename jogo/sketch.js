@@ -2,8 +2,6 @@ let imagemNave;
 let imagemAlien;
 let imagemMissil;
 
-let posicaoMissil;
-
 
 let posicoesMisseis = new Array();
 
@@ -28,10 +26,6 @@ function preload(){
 function setup() {
     // criando um palco com 900 de largura e 600 de altura
     createCanvas(900, 600);
-    posicaoMissil = createVector(450,500);
-    posicoesMisseis.push(createVector(450, 500));
-    posicoesMisseis.push(createVector(100, 500));
-    posicoesMisseis.push(createVector(800,500));
 
     posicaoNave = createVector(400 , 500);
     posicaoAlien = createVector(350, 200);
@@ -41,14 +35,13 @@ function setup() {
 function draw() {
     // pintar o fundo do palco de cinza
     background(100);
-    //movendo o míssil para cima
-    posicaoMissil.y = posicaoMissil.y - 1;
+    movimentaMisseis();
     //centralizando a posição da nave
     posicaoNave.x = mouseX - imagemNave.width / 2;
     //desenhar a nave
     image(imagemNave, posicaoNave.x, posicaoNave.y);
 
-    verificaColisao();
+    //verificaColisao();
     alienEstaVivo();
     movimentarAlien();
     desenhaAlien();
@@ -57,8 +50,8 @@ function draw() {
 }
 //quando o mouse for pressionado
 function mousePressed(){
-    posicaoMissil.y = posicaoNave.y;
-    posicaoMissil.x = mouseX - imagemMissil.width / 2;
+    posicoesMisseis.push(createVector(mouseX - imagemMissil.width / 2, posicaoNave.y ));
+
 }
 
 function verificaColisao(){
@@ -97,11 +90,17 @@ function movimentarAlien(){
 }
 
 function desenhaMisseis(){
-     //desenhando o missil
-     image(imagemMissil, posicaoMissil.x, posicaoMissil.y);
+
      //para cada item da minha lista -> desenhar aquele ator
      for(let posicao of posicoesMisseis){
          image(imagemMissil, posicao.x, posicao.y);
      }
     
+}
+
+function movimentaMisseis(){
+    //para cada posicao dentro da lista de posições -> mover o míssil para cima
+    for(let posicao of posicoesMisseis){
+        posicao.y = posicao.y -1;
+    }
 }

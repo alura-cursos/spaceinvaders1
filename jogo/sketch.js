@@ -3,6 +3,10 @@ let imagemAlien;
 let imagemMissil;
 
 let posicaoMissil;
+
+
+let posicoesMisseis = new Array();
+
 let posicaoNave;
 let posicaoAlien;
 
@@ -24,8 +28,11 @@ function preload(){
 function setup() {
     // criando um palco com 900 de largura e 600 de altura
     createCanvas(900, 600);
+    posicaoMissil = createVector(450,500);
+    posicoesMisseis.push(createVector(450, 500));
+    posicoesMisseis.push(createVector(100, 500));
+    posicoesMisseis.push(createVector(800,500));
 
-    posicaoMissil = createVector(450, 500);
     posicaoNave = createVector(400 , 500);
     posicaoAlien = createVector(350, 200);
 }
@@ -45,8 +52,7 @@ function draw() {
     alienEstaVivo();
     movimentarAlien();
     desenhaAlien();
-    //desenhando o missil
-    image(imagemMissil, posicaoMissil.x, posicaoMissil.y);
+    desenhaMisseis();
 
 }
 //quando o mouse for pressionado
@@ -88,4 +94,14 @@ function movimentarAlien(){
     if(posicaoAlien.x + imagemAlien.width > 900 || posicaoAlien.x < 0){
         velocidadeAlien = velocidadeAlien * -1;
     }
+}
+
+function desenhaMisseis(){
+     //desenhando o missil
+     image(imagemMissil, posicaoMissil.x, posicaoMissil.y);
+     //para cada item da minha lista -> desenhar aquele ator
+     for(let posicao of posicoesMisseis){
+         image(imagemMissil, posicao.x, posicao.y);
+     }
+    
 }

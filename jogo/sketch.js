@@ -11,6 +11,8 @@ let alienVivo = true;
 let estaTocando;
 
 let velocidadeAlien = 2;
+let velocidadeMissil = 5;
+let pontuacao = 0;
 
 //preparando o ambiente de trabalho
 //carrengado as fantasias do nosso jogo
@@ -55,7 +57,9 @@ function draw() {
     movimentarAlien();
     desenhaAlien();
     desenhaMisseis();
-
+    fill(255);
+    textSize(30);
+    text("Pontuação: "+pontuacao, 10,80);
 }
 //quando o mouse for pressionado
 function mousePressed() {
@@ -83,6 +87,7 @@ function verificaColisao() {
                 } else {
                     //o alien está morto
                     aliens[i] = -1;
+                    pontuacao = pontuacao + 10;
                 }
             }
         }
@@ -124,7 +129,7 @@ function desenhaMisseis() {
 function movimentaMisseis() {
     //para cada posicao dentro da lista de posições -> mover o míssil para cima
     for (let posicao of posicoesMisseis) {
-        posicao.y = posicao.y - 1;
+        posicao.y = posicao.y - velocidadeMissil;
     }
 }
 

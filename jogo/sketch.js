@@ -9,6 +9,7 @@ let aliens = new Array();
 
 let posicaoNave;
 let posicaoAlien;
+let deslocamentoAlien = 0;
 
 let alienVivo = true;
 let estaTocando;
@@ -70,7 +71,7 @@ function verificaColisao() {
     for (let posicao of posicoesMisseis) {
         //verficar a colisao com todos os aliens
         for(let i=0 ; i<6 ; i = i+1){
-            let posicaoAlienDaLista = createVector(150*i);
+            let posicaoAlienDaLista = calcularPosicaoAlien(i);
             //se o missil está para esquerda OU (||)  para direita OU  para baixo OU para cima
             if (posicao.x + imagemMissil.width < posicaoAlienDaLista.x ||
             posicao.x > posicaoAlienDaLista.x + imagemAlien.width ||
@@ -99,7 +100,8 @@ function desenhaAlien() {
         //se o numero da fantasia for diferente(!=) de -1 
         if(numeroFantasia != -1){
             //desenha o alien
-            image(imagensAlien[numeroFantasia], 150 * i, 0);
+            let posicao = calcularPosicaoAlien(i);
+            image(imagensAlien[numeroFantasia], posicao.x, posicao.y);
         }
     }
 }
@@ -107,7 +109,10 @@ function desenhaAlien() {
 
 function movimentarAlien() {
     posicaoAlien.x = posicaoAlien.x + velocidadeAlien;
-    if (posicaoAlien.x + imagemAlien.width > 900 || posicaoAlien.x < 0) {
+    deslocamentoAlien = deslocamentoAlien + velocidadeAlien;
+    let posicaoUltimoAlien = calcularPosicaoAlien(5);
+    let posicaoPrimeiroAlien = calcularPosicaoAlien(0);
+    if (posicaoUltimoAlien.x + imagemAlien.width > 900 || posicaoPrimeiroAlien.x < 0) {
         velocidadeAlien = velocidadeAlien * -1;
     }
 }
@@ -126,4 +131,11 @@ function movimentaMisseis() {
     for (let posicao of posicoesMisseis) {
         posicao.y = posicao.y - 1;
     }
+}
+
+function calcularPosicaoAlien(indiceAlien){
+    let posicao = createVector();
+    posicao.x = indiceAlien*100 + deslocamentoAlien;
+    posicao.y = 150;
+    return posicao;
 }
